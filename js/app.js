@@ -49,7 +49,7 @@ function getFigure(item){
 function validateResult(){
 	if(cardsInTurn == 2){
 		//Get both cards open
-		var openCards = $(".open");
+		var openCards = $(".open").not(".match");
 		//If the have the same figure class, then it is a match!
 		if(getFigure(openCards[0]) == getFigure(openCards[1])){
 			matches++;
@@ -61,7 +61,6 @@ function validateResult(){
 				alert("You win!");
 			}
 		}else{
-			alert("not a match");
 			//Hide both cards
 			//Reset the class to be only "card"
 			$(openCards[0]).attr('class', 'card');	
