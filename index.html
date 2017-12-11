@@ -8,6 +8,8 @@
     <link rel="stylesheet prefetch" href="https://fonts.googleapis.com/css?family=Coda">
     <link rel="stylesheet" href="css/app.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src = "https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>	
+	<script src="js/jquery.flip.js"></script>
 </head>
 <body>
 
@@ -15,16 +17,15 @@
         <header>
             <h1>Matching Game</h1>
         </header>
-
         <section class="score-panel">
         	<ul class="stars">
-        		<li><i class="fa fa-star"></i></li>
-        		<li><i class="fa fa-star"></i></li>
-        		<li><i class="fa fa-star"></i></li>
+        		<li><i id="star3" onclick="showWinScreen()" class="fa fa-star"></i></li>
+        		<li><i id="star2" class="fa fa-star"></i></li>
+        		<li><i id="star1" class="fa fa-star"></i></li>
         	</ul>
 
-        	<span class="moves">3</span> Moves
-
+        	<span class="moves">3</span> Moves - Time 
+			<span id="minutes">00</span>:<span id="seconds">00</span>
             <div class="restart">
         		<i class="fa fa-repeat"></i>
         	</div>
@@ -82,6 +83,15 @@
         </ul>
     </div>
 
+	<!-- WINNING SCREEN -->
+	<div id="winScreen">
+		<div id="intBox">
+			<h1>Congratulations! You won!</h1>
+			With <span id="moveCount">xx</span> moves and <span id="starCount">xx</span> stars and it took you <span id="minutesWin">00</span> minutes and <span id="secondsWin">00</span> seconds<br>
+			Woooooo!<br>
+			<button id="playAgain" class="playAgainButton">Play again!</button>
+		</div>
+	</div>
     <script src="js/app.js"></script>
 </body>
 </html>

@@ -2,11 +2,16 @@
  * Create a list that holds all of your cards
  */
  
- var cards = ["fa-diamond", "fa-diamond", "fa-paper-plane-o", "fa-paper-plane-o",  "fa-anchor", "fa-anchor", "fa-bolt", "fa-bolt", "fa-cube", "fa-cube", "fa-leaf", "fa-leaf", 
- "fa-bicycle", "fa-bicycle", "fa-bomb", "fa-bomb"];
- var moves = 0;
- var cardsInTurn = 0;
- var matches = 0;
+	var cards = ["fa-diamond", "fa-diamond", "fa-paper-plane-o", "fa-paper-plane-o",  "fa-anchor", "fa-anchor", "fa-bolt", "fa-bolt", "fa-cube", "fa-cube", "fa-leaf", "fa-leaf", 
+		"fa-bicycle", "fa-bicycle", "fa-bomb", "fa-bomb"];
+	var moves = 0;
+	var cardsInTurn = 0;
+	var matches = 0;
+	//Star Control
+	const looseStarRate = 10;
+	//Timer
+	var sec = 0;
+	var updateTime = true;
  
  //Class match match Class open open
  
@@ -42,12 +47,39 @@ function updateMoves(){
 	$(".moves").text(moves);
 }
 
+function updateStars(){
+		if(moves > looseStarRate){
+			$("#star1").attr('class', 'fa fa-star-o');	
+		}else{
+			$("#star1").attr('class', 'fa fa-star');	
+			$("#star2").attr('class', 'fa fa-star');	
+			$("#star3").attr('class', 'fa fa-star');	
+		}
+		if(moves > (looseStarRate * 2)){
+			$("#star2").attr('class', 'fa fa-star-o');	
+		}else{
+			$("#star2").attr('class', 'fa fa-star');	
+			$("#star3").attr('class', 'fa fa-star');				
+		}
+		if(moves > (looseStarRate * 3)){
+			$("#star3").attr('class', 'fa fa-star-o');	
+		}else{	
+			$("#star3").attr('class', 'fa fa-star');				
+		}
+}
+
 function getFigure(item){
 	return $(item).children().attr("class");
 }
 
 function validateResult(){
 	if(cardsInTurn == 2){
+		
+		//Increment the moves
+		moves++;
+		updateMoves();
+		updateStars();		
+		
 		//Get both cards open
 		var openCards = $(".open").not(".match");
 		//If the have the same figure class, then it is a match!
@@ -57,14 +89,34 @@ function validateResult(){
 			$(openCards[0]).addClass("match");
 			$(openCards[1]).addClass("match");
 			
+			$(openCards[0]).effect("shake", {direction:"up" , distance:10}, 500);
+			$(openCards[1]).effect("shake", {direction:"up" , distance:10}, 500);
+			
 			if(matches == 8){
-				alert("You win!");
+				updateTime = false;
+				showWinScreen();
 			}
 		}else{
-			//Hide both cards
-			//Reset the class to be only "card"
-			$(openCards[0]).attr('class', 'card');	
-			$(openCards[1]).attr('class', 'card');	
+			
+				
+			//Time out to be 1 second
+			var x = 1000;
+			
+			//show them as wrong both cards
+			$(openCards[0]).attr('class', 'card unmatch');	
+			$(openCards[1]).attr('class', 'card unmatch');	
+			
+			//shake them
+			$(openCards[0]).effect("shake", {distance:10}, 500);
+			$(openCards[1]).effect("shake", {distance:10}, 500);
+			
+			setTimeout(function(){
+				//Reset the class to be only "card"		
+			  $(openCards[0]).attr('class', 'card');	
+			  $(openCards[1]).attr('class', 'card');	
+			}, x);
+			
+			
 		}
 		//reset the counter
 		cardsInTurn = 0;
@@ -79,21 +131,16 @@ function sleep(miliseconds) {
 }
 
 function clickCard(){
-	//If the card is a match, it does not counter
-	if(!$(this).hasClass("match")){
-		//If the card is not open, then open it
-		if(!$(this).hasClass("open")){
+	//If the game is no long showing a no match
+	if($(".unmatch").length == 0 &&
+		//and If the card is not already a match
+		!$(this).hasClass("match") &&
+		//and If the card is not open, then open it
+		!$(this).hasClass("open")){
 			//Open it by adding the class
 			$(this).attr("class", "card open show");
-		}else{
-			//Close the card
-			$(this).removeClass("open show");
-		}
-		//Increment the moves
-		moves++;
-		updateMoves();
-		//Increment the moves in the turn
-		cardsInTurn++;
+			//Increment the moves in the turn
+			cardsInTurn++;
 	}
 }
 
@@ -126,9 +173,36 @@ function restartGame(){
 	moves = 0;
 	matches = 0;
 	cardsInTurn = 0;
+	sec = 0;
+	$("#seconds").html("00");
+	$("#minutes").html("00");
+	updateTime = true;
 	updateMoves();
+	updateStars();
 }
 
+function playAgain(){
+	//Hide winning message
+	$("#winScreen").hide("puff");
+	//Restart game
+	restartGame();
+}
+function showWinScreen(){
+	$("#winScreen").show("pulsate",1000);
+	$("#moveCount").text(moves);
+	$("#starCount").text($(".fa-star").length);
+	$("#secondsWin").html(pad(sec%60));
+	$("#minutesWin").html(pad(parseInt(sec/60,10)));	
+
+}
+
+function flipCard(){
+	$("#demo").flip();	
+}
+
+function pad (val){ 
+	return val > 9 ? val : "0" + val; 
+}
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
@@ -141,14 +215,22 @@ function restartGame(){
  */
 $(function (){
 	//Shuffle the cards
+	$("#winScreen").hide();
 	shuffle(cards);
 	assignCards();
 	$(".card").click(clickCard);
 	$(".card").click(validateResult);
 	$(".restart").click(restartGame);
-	updateMoves();
-	$(".flip").flip({
-        trigger: 'hover'
-    });
+	$("#playAgain").click(playAgain);
+	$(".demo").click(flipCard);
+
 	
+	updateMoves();
+    
+    setInterval( function(){
+		if(updateTime){
+			$("#seconds").html(pad(++sec%60));
+			$("#minutes").html(pad(parseInt(sec/60,10)));
+		}
+    }, 1000);
 });

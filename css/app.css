@@ -2,6 +2,28 @@ html {
     box-sizing: border-box;
 }
 
+.front{
+    height: 100%;
+    width: 100%;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+    position: absolute;
+    z-index: 1;
+    transition: all 1s ease-out;
+    transform: rotateY(0deg);
+}
+
+.back{
+    transform: rotateY(-180deg);
+    height: 100%;
+    width: 100%;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+    position: absolute;
+    z-index: 0;
+    transition: all 1s ease-out;
+}
+
 *,
 *::before,
 *::after {
@@ -112,4 +134,41 @@ h1 {
 .score-panel .restart {
     float: right;
     cursor: pointer;
+}
+
+/**
+* Styles for the winning screen
+*/
+
+#winScreen
+{
+    position:fixed;
+    padding:0;
+    margin:0;
+
+    top:0;
+    left:0;
+
+    width: 100%;
+    height: 100%;
+    background:rgba(255,255,255,1);
+	
+	display: table;
+}
+
+#intBox {
+	display: table-cell; 
+	vertical-align: middle; 
+	text-align: center;
+	font-size : 0.8em;
+}
+
+.playAgainButton{
+	background-color : #02ccba;
+	border: none;
+    color: white;
+	font-size : 1.5em;
+	padding: 10px 20px;
+    margin: 10px;
+	border-radius: 4px;
 }
