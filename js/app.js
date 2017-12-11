@@ -2,13 +2,13 @@
  * Create a list that holds all of your cards
  */
  
-	var cards = ["fa-diamond", "fa-diamond", "fa-paper-plane-o", "fa-paper-plane-o",  "fa-anchor", "fa-anchor", "fa-bolt", "fa-bolt", "fa-cube", "fa-cube", "fa-leaf", "fa-leaf", 
-		"fa-bicycle", "fa-bicycle", "fa-bomb", "fa-bomb"];
+	var cards = ["fa-youtube", "fa-youtube", "fa-whatsapp", "fa-whatsapp",  "fa-facebook-official", "fa-facebook-official", "fa-pinterest", "fa-pinterest", "fa-google-plus", "fa-google-plus", 
+		"fa-instagram", "fa-instagram", "fa-twitter", "fa-twitter", "fa-snapchat", "fa-snapchat"];
 	var moves = 0;
 	var cardsInTurn = 0;
 	var matches = 0;
 	//Star Control
-	const looseStarRate = 10;
+	const looseStarRate = 15;
 	//Timer
 	var sec = 0;
 	var updateTime = true;
@@ -214,6 +214,7 @@ function pad (val){
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 $(function (){
+
 	//Shuffle the cards
 	$("#winScreen").hide();
 	shuffle(cards);
