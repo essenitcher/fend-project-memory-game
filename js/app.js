@@ -8,7 +8,7 @@
 	var cardsInTurn = 0;
 	var matches = 0;
 	//Star Control
-	const looseStarRate = 15;
+	const looseStarRate = 10;
 	//Timer
 	var sec = 0;
 	var updateTime = true;
