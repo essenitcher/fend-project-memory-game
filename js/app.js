@@ -53,18 +53,11 @@ function updateStars(){
 		}else{
 			$("#star1").attr('class', 'fa fa-star');	
 			$("#star2").attr('class', 'fa fa-star');	
-			$("#star3").attr('class', 'fa fa-star');	
 		}
 		if(moves > (looseStarRate * 2)){
 			$("#star2").attr('class', 'fa fa-star-o');	
 		}else{
-			$("#star2").attr('class', 'fa fa-star');	
-			$("#star3").attr('class', 'fa fa-star');				
-		}
-		if(moves > (looseStarRate * 3)){
-			$("#star3").attr('class', 'fa fa-star-o');	
-		}else{	
-			$("#star3").attr('class', 'fa fa-star');				
+			$("#star2").attr('class', 'fa fa-star');					
 		}
 }
 
