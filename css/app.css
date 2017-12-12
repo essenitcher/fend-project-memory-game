@@ -35,6 +35,7 @@ body {
 h1 {
     font-family : 'Open Sans', sans-serif;
     font-weight : 300;
+	font-size : 2.5em;
 }
 
 /*
@@ -42,8 +43,10 @@ h1 {
  */
 
 .deck {
-    width : 660px;
-    min-height : 680px;
+    width : 70vw;
+	height : 70vw;
+	max-width : 700px;
+	max-height : 700px;
     background : linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
     padding : 32px;
     border-radius : 10px;
@@ -56,8 +59,8 @@ h1 {
 }
 
 .deck .card {
-    height : 125px;
-    width : 125px;
+    height : 14vw;
+    width : 14vw;
     background : #2e3d49;
     font-size : 0;
     color : #ffffff;
@@ -67,6 +70,8 @@ h1 {
     justify-content : center;
     align-items : center;
     box-shadow : 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
+	max-width : 140px;
+	max-height : 140px;
 }
 
 .deck .card.open {
@@ -97,8 +102,10 @@ h1 {
 
 .score-panel {
     text-align : left;
-    width : 345px;
+    width : 70vw;
+	max-width : 700px;
     margin-bottom : 10px;
+	font-size : 1.5em;
 }
 
 .score-panel .stars {
